@@ -21,6 +21,10 @@ kendiliğinden geçilmez (bkz. CLAUDE.md → "Bitti" tanımı).
       `messages:0`); Consumer ikinci seferde "zaten işlenmiş" deyip DB'ye tekrar yazmadı —
       idempotency çalışıyor. `dotnet build` uyarısız/hatasız. İlk migration
       (`InitialCreate`) eklendi, `Database.MigrateAsync()` ile Consumer açılışında otomatik uygulanıyor.
-- [ ] Faz 4: Testler — repository ve event handling için xUnit testleri
+- [x] Faz 4: Testler — repository ve event handling için xUnit testleri. Gerçek Sqlite provider'ına
+      karşı (":memory:" bağlantısı) yazıldı, EF InMemory provider kullanılmadı — production'daki
+      davranışa daha yakın olsun diye. `TaskRepositoryTests`, `ProcessedEventRepositoryTests`,
+      `TaskCreatedEventHandlerTests` (yeni event kaydeder + aynı EventId ikinci kez gelirse
+      Task'ı tekrar eklemez). `dotnet test` → 5/5 geçti.
 - [ ] Faz 5 (opsiyonel, öğrenme ilerledikçe): dead-letter queue, retry policy, ikinci bir event
       (ör. `TaskCompletedEvent`) ile publish/consume tekrarı
