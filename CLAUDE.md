@@ -49,8 +49,8 @@ Detaylar: `docs/architecture.md`
 ## Komutlar
 - RabbitMQ'yu ayağa kaldır: `docker compose up -d`
 - RabbitMQ paneli: http://localhost:15672 (guest/guest)
-- Build: `dotnet build RabbitMqDemo.sln`
-- Testler: `dotnet test RabbitMqDemo.sln`
+- Build: `dotnet build RabbitMqDemo.slnx`
+- Testler: `dotnet test RabbitMqDemo.slnx`
 - Producer'ı çalıştır: `dotnet run --project src/Producer/Producer.Api`
 - Consumer'ı çalıştır: `dotnet run --project src/Consumer/Consumer.Worker`
 

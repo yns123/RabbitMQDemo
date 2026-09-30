@@ -45,7 +45,7 @@ RabbitMqDemo/
 │  ├─ events.md
 │  └─ roadmap.md
 ├─ docker-compose.yml             # sadece RabbitMQ
-└─ RabbitMqDemo.sln
+└─ RabbitMqDemo.slnx
 ```
 
 ## Repository pattern
