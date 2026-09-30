@@ -14,8 +14,13 @@ kendiliğinden geçilmez (bkz. CLAUDE.md → "Bitti" tanımı).
       Accepted → `rabbitmqdemo` exchange'inde publish_in=1, `task-created-queue`'da 1 mesaj
       (management API ile kontrol edildi). Validasyon hatası (title eksik) ProblemDetails
       formatında 400 döndü.
-- [ ] Faz 3: Consumer — kuyruktan okur, `ITaskRepository` + EF Core (SQLite) ile Task'ı kaydeder,
-      idempotency (`ProcessedEvents`) uygulanır
+- [x] Faz 3: Consumer — kuyruktan okur, `ITaskRepository` + EF Core (SQLite) ile Task'ı kaydeder,
+      idempotency (`ProcessedEvents`) uygulanır. Uçtan uca doğrulandı: Producer'dan `POST /api/tasks`
+      → Consumer Task'ı `tasks.db`'ye yazdı (log + SQL doğrulandı). Aynı `EventId` ile mesaj
+      RabbitMQ management API'den manuel tekrar publish edildi (`publish:2, deliver:2, ack:2`,
+      `messages:0`); Consumer ikinci seferde "zaten işlenmiş" deyip DB'ye tekrar yazmadı —
+      idempotency çalışıyor. `dotnet build` uyarısız/hatasız. İlk migration
+      (`InitialCreate`) eklendi, `Database.MigrateAsync()` ile Consumer açılışında otomatik uygulanıyor.
 - [ ] Faz 4: Testler — repository ve event handling için xUnit testleri
 - [ ] Faz 5 (opsiyonel, öğrenme ilerledikçe): dead-letter queue, retry policy, ikinci bir event
       (ör. `TaskCompletedEvent`) ile publish/consume tekrarı
