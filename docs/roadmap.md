@@ -9,7 +9,11 @@ kendiliğinden geçilmez (bkz. CLAUDE.md → "Bitti" tanımı).
       uyarısız). Not: .NET 10 ile proje `.slnx` formatında (`RabbitMqDemo.slnx`).
       Not: bu ortamda Docker Desktop çalışmıyordu, `docker compose up -d` denenmedi geçmedi —
       sıradaki oturumda önce bu doğrulanmalı.
-- [ ] Faz 2: Producer — `POST /api/tasks` endpoint'i, `TaskCreatedEvent`'i RabbitMQ'ya yayınlar
+- [x] Faz 2: Producer — `POST /api/tasks` endpoint'i, `TaskCreatedEvent`'i RabbitMQ'ya yayınlar.
+      Uçtan uca doğrulandı: `docker compose up -d` → RabbitMQ healthy → `POST /api/tasks` → 202
+      Accepted → `rabbitmqdemo` exchange'inde publish_in=1, `task-created-queue`'da 1 mesaj
+      (management API ile kontrol edildi). Validasyon hatası (title eksik) ProblemDetails
+      formatında 400 döndü.
 - [ ] Faz 3: Consumer — kuyruktan okur, `ITaskRepository` + EF Core (SQLite) ile Task'ı kaydeder,
       idempotency (`ProcessedEvents`) uygulanır
 - [ ] Faz 4: Testler — repository ve event handling için xUnit testleri
